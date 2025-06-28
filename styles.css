@@ -1,0 +1,366 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background:
+    linear-gradient(rgba(10,10,10,0.85), rgba(10,10,10,0.85)),
+    url('img/fundo.jpg') no-repeat center center fixed;
+  background-size: cover;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #d8c7ff;
+  min-height: 100vh;
+  padding: 30px 20px;
+  user-select: none;
+}
+
+h1, h2 {
+  font-family: 'Bradley Hand', cursive, 'Segoe UI', sans-serif;
+}
+
+h1 {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 40px;
+  color: #d7bfff;
+  text-shadow: 1px 1px 10px #7a3effbb;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 25px;
+  border-bottom: 2px solid #925eff;
+  padding-bottom: 8px;
+  color: #b39dff;
+}
+
+.public-container, #diarioContainer {
+  max-width: 800px;
+  margin: 0 auto;
+  background: rgba(30, 10, 50, 0.85);
+  border-radius: 20px;
+  padding: 40px 50px;
+  box-shadow:
+    0 0 30px 5px #a577ffcc,
+    inset 0 0 20px 3px #d1aaffaa;
+}
+
+.historia-public {
+  background: #3a2670cc;
+  border-radius: 15px;
+  padding: 20px 30px;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  color: #eee5ff;
+  box-shadow: inset 0 0 18px #7f5effaa;
+  margin-bottom: 50px;
+  min-height: 140px;
+}
+
+.video-gallery, #videoList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+}
+
+.video-item {
+  width: 300px;
+  background: linear-gradient(145deg, #5733a4, #7d4dff);
+  border-radius: 24px;
+  padding: 16px;
+  box-sizing: border-box;
+  text-align: center;
+  box-shadow: 0 10px 26px #9d73ffcc;
+  color: #e7dcff;
+  font-weight: 700;
+  user-select: text;
+}
+
+.video-item video {
+  width: 100%;
+  height: 180px;
+  border-radius: 20px;
+  border: 3px solid #b78fff;
+  box-shadow: 0 0 20px #b78fffbb;
+  background-color: #12003b;
+  margin-bottom: 10px;
+}
+
+/* Login styles */
+#loginContainer {
+  max-width: 380px;
+  margin: 120px auto;
+  background: rgba(40, 20, 70, 0.9);
+  border-radius: 20px;
+  padding: 30px 25px;
+  box-shadow: 0 0 30px 8px #a96effbb;
+  text-align: center;
+}
+
+#loginContainer input[type="password"] {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+#loginContainer button {
+  width: 100%;
+  padding: 12px 0;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 10px;
+  background: #8a58ff;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 0 15px #935cff;
+  transition: background-color 0.3s ease;
+}
+
+#loginContainer button:hover {
+  background: #a375ff;
+}
+
+#msgErro {
+  margin-top: 10px;
+  color: #ff7b7b;
+  font-weight: 600;
+  display: none;
+}
+
+/* Diário private container */
+#diarioContainer {
+  border-radius: 30px;
+  padding: 40px 50px;
+  box-shadow:
+    0 0 35px 8px #a96effcc,
+    inset 0 0 20px 5px #d1aaffaa;
+}
+
+#historiaText {
+  width: 100%;
+  min-height: 180px;
+  border-radius: 18px;
+  padding: 20px 25px;
+  font-size: 1.25rem;
+  line-height: 1.5;
+  background: #3a2670cc;
+  color: #eee5ff;
+  box-shadow: inset 0 0 22px #7f5effaa;
+  resize: vertical;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-bottom: 30px;
+}
+
+#salvarHistoriaBtn, #anexarVideoBtn, #logoutBtn {
+  display: block;
+  margin: 0 auto 40px auto;
+  padding: 14px 28px;
+  font-size: 1.25rem;
+  border: none;
+  border-radius: 14px;
+  background: #9c64ff;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 0 15px #a477ff;
+  transition: background-color 0.3s ease;
+}
+
+#salvarHistoriaBtn:hover, #anexarVideoBtn:hover, #logoutBtn:hover {
+  background: #b289ff;
+}
+
+#uploadSection {
+  margin-bottom: 40px;
+  text-align: center;
+}
+/* Estilos gerais já usados */
+.container {
+  max-width: 960px;
+  margin: 60px auto;
+  background: rgba(30,10,50,0.85);
+  border-radius: 20px;
+  padding: 40px 50px;
+  box-shadow: 0 0 30px 5px #a577ffcc, inset 0 0 20px 3px #d1aaffaa;
+  color: #d8c7ff;
+  position: relative;
+}
+h1 {
+  font-family: 'Bradley Hand', cursive, 'Segoe UI', sans-serif;
+  font-size: 3rem;
+  margin-bottom: 30px;
+  text-align: center;
+  color: #d7bfff;
+  text-shadow: 1px 1px 10px #7a3effbb;
+}
+.video-gallery {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 24px;
+  padding-bottom: 10px;
+  cursor: grab;
+  scrollbar-width: thin;
+  scrollbar-color: #a678ff transparent;
+  user-select: none;
+}
+.video-gallery::-webkit-scrollbar {
+  height: 8px;
+}
+.video-gallery::-webkit-scrollbar-track {
+  background: transparent;
+}
+.video-gallery::-webkit-scrollbar-thumb {
+  background-color: #a678ff;
+  border-radius: 10px;
+}
+.video-gallery.active {
+  cursor: grabbing;
+  cursor: -webkit-grabbing;
+}
+.video-item {
+  width: 320px;
+  background: linear-gradient(145deg, #5733a4, #7d4dff);
+  border-radius: 24px;
+  padding: 16px;
+  box-sizing: border-box;
+  text-align: center;
+  box-shadow: 0 10px 26px #9d73ffcc;
+  color: #e7dcff;
+  font-weight: 700;
+  user-select: text;
+}
+.video-item video {
+  width: 100%;
+  height: 180px;
+  border-radius: 20px;
+  border: 3px solid #b78fff;
+  box-shadow: 0 0 20px #b78fffbb;
+  background-color: #12003b;
+  margin-bottom: 12px;
+}
+textarea {
+  width: 100%;
+  min-height: 150px;
+  font-size: 1.2rem;
+  border-radius: 10px;
+  padding: 12px;
+  border: none;
+  resize: vertical;
+  background-color: #2b1e5d;
+  color: #e5dfff;
+  box-shadow: inset 0 0 15px #8868ffcc;
+}
+.btn-navegacao {
+  position: fixed;
+  top: 25px;
+  right: 25px;
+  background: #8a58ff;
+  border: none;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 14px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 0 15px #935cff;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+  user-select: none;
+  z-index: 999;
+}
+.btn-navegacao:hover {
+  background: #a375ff;
+}
+
+/* --------- Media Queries para celular/tablet --------- */
+@media (max-width: 768px) {
+  .container {
+    max-width: 95%;
+    margin: 30px auto;
+    padding: 25px 20px;
+    border-radius: 16px;
+  }
+  h1 {
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+  }
+  .video-item {
+    width: 240px;
+    padding: 12px;
+    border-radius: 18px;
+  }
+  .video-item video {
+    height: 140px;
+  }
+  textarea {
+    font-size: 1rem;
+    min-height: 130px;
+  }
+  .btn-navegacao {
+    padding: 10px 18px;
+    font-size: 1rem;
+    top: 15px;
+    right: 15px;
+  }
+}
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.8rem;
+  }
+  .video-item {
+    width: 180px;
+    padding: 10px;
+  }
+  .video-item video {
+    height: 100px;
+  }
+  textarea {
+    font-size: 0.9rem;
+    min-height: 100px;
+  }
+  .btn-navegacao {
+    padding: 8px 14px;
+    font-size: 0.9rem;
+    top: 12px;
+    right: 12px;
+  }
+}
+/* Botões de Acesso da Página Index - Estilo Bratva */
+
+.index-btn {
+  display: block;
+  margin: 0 auto 20px auto;
+  padding: 14px 28px;
+  font-size: 1.25rem;
+  border: none;
+  border-radius: 14px;
+  background: #9c64ff;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 0 15px #a477ff;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  user-select: none;
+  max-width: 300px;
+}
+
+.index-btn:hover {
+  background: #b289ff;
+  transform: scale(1.05);
+}
+
+@media (max-width: 480px) {
+  .index-btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+  }
+}

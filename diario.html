@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Um Pouco Sobre Mim - Diário Privado</title>
+<link rel="stylesheet" href="styles.css" />
+<style>
+  /* Só estilos específicos do diário privado aqui */
+</style>
+</head>
+<body>
+
+<!-- Login -->
+<div id="loginContainer">
+  <h1>Entre no Seu Diário</h1>
+  <input type="password" id="senhaInput" placeholder="Digite a senha" autocomplete="off" />
+  <button id="loginBtn">Entrar</button>
+  <div id="msgErro"></div>
+</div>
+
+<!-- Diário -->
+<div id="diarioContainer" style="display:none;">
+
+  <h2>Um Pouco Sobre Mim</h2>
+
+  <textarea id="historiaText" placeholder="Escreva aqui sua história..."></textarea>
+  <button id="salvarHistoriaBtn">Salvar História</button>
+
+  <div id="uploadSection">
+    <input type="file" id="videoInput" accept="video/*" />
+    <br />
+    <button id="anexarVideoBtn">Anexar Vídeo</button>
+  </div>
+
+  <div id="videoList"></div>
+
+  <button id="logoutBtn">Sair do Diário</button>
+</div>
+<a href="historia.html" class="btn-navegacao">Ver Vídeos</a>
+
+<script>
+  const SENHA_CORRETA = 'Gaby';
+
+  const loginContainer = document.getElementById('loginContainer');
+  const diarioContainer = document.getElementById('diarioContainer');
+  const senhaInput = document.getElementById('senhaInput');
+  const loginBtn = document.getElementById('loginBtn');
+  const msgErro = document.getElementById('msgErro');
+
+  const historiaText = document.getElementById('historiaText');
+  const salvarHistoriaBtn = document.getElementById('salvarHistoriaBtn');
+
+  const videoInput = document.getElementById('videoInput');
+  const anexarVideoBtn = document.getElementById('anexarVideoBtn');
+  const videoList = document.getElementById('videoList');
+
+  const logoutBtn = document.getElementById('logoutBtn');
+
+  // Login
+  loginBtn.addEventListener('click', () => {
+    if(senhaInput.value === SENHA_CORRETA) {
+      loginContainer.style.display = 'none';
+      diarioContainer.style.display = 'block';
+      msgErro.style.display = 'none';
+      senhaInput.value = '';
+      carregarHistoria();
+      carregarVideos();
+    } else {
+      msgErro.textContent = 'Senha incorreta. Tente novamente.';
+      msgErro.style.display = 'block';
+    }
+  });
+
+  senhaInput.addEventListener('keyup', e => {
+    if(e.key === 'Enter') loginBtn.click();
+  });
+
+  logoutBtn.addEventListener('click', () => {
+    diarioContainer.style.display = 'none';
+    loginContainer.style.display = 'block';
+    historiaText.value = '';
+    videoList.innerHTML = '';
+  });
+
+  // Carregar e salvar história
+  function carregarHistoria() {
+    const historia = localStorage.getItem('minhaHistoria');
+    historiaText.value = historia ? historia : '';
+  }
+
+  salvarHistoriaBtn.addEventListener('click', () => {
+    localStorage.setItem('minhaHistoria', historiaText.value);
+    alert('História salva!');
+  });
+
+  // IndexedDB setup
+  let db;
+  const request = indexedDB.open('videosDB', 1);
+
+  request.onupgradeneeded = e => {
+    db = e.target.result;
+    if(!db.objectStoreNames.contains('videos')) {
+      db.createObjectStore('videos', { keyPath: 'id', autoIncrement: true });
+    }
+  };
+
+  request.onsuccess = e => {
+    db = e.target.result;
+    if(diarioContainer.style.display === 'block') carregarVideos();
+  };
+
+  request.onerror = e => {
+    alert('Erro ao abrir banco de vídeos');
+  };
+
+  // Anexar vídeo
+  anexarVideoBtn.addEventListener('click', () => {
+    if(videoInput.files.length === 0) {
+      alert('Escolha um vídeo primeiro!');
+      return;
+    }
+    const file = videoInput.files[0];
+    const transaction = db.transaction(['videos'], 'readwrite');
+    const store = transaction.objectStore('videos');
+    store.add({name: file.name, blob: file});
+    transaction.oncomplete = () => {
+      videoInput.value = '';
+      carregarVideos();
+      alert('Vídeo salvo!');
+    };
+    transaction.onerror = () => {
+      alert('Erro ao salvar vídeo');
+    };
+  });
+
+  // Carregar vídeos
+  function carregarVideos() {
+    videoList.innerHTML = '';
+    const transaction = db.transaction(['videos'], 'readonly');
+    const store = transaction.objectStore('videos');
+    const request = store.openCursor();
+
+    request.onsuccess = e => {
+      const cursor = e.target.result;
+      if(cursor) {
+        const videoData = cursor.value;
+        const url = URL.createObjectURL(videoData.blob);
+
+        const videoDiv = document.createElement('div');
+        videoDiv.classList.add('video-item');
+
+        const video = document.createElement('video');
+        video.controls = true;
+        video.src = url;
+
+        const titulo = document.createElement('p');
+        titulo.textContent = videoData.name;
+
+        // Botão remover vídeo
+        const btnRemover = document.createElement('button');
+        btnRemover.textContent = 'Remover';
+        btnRemover.onclick = () => {
+          if(confirm(`Remover o vídeo "${videoData.name}"?`)) {
+            const deleteTransaction = db.transaction(['videos'], 'readwrite');
+            const deleteStore = deleteTransaction.objectStore('videos');
+            deleteStore.delete(videoData.id);
+            deleteTransaction.oncomplete = () => {
+              carregarVideos();
+              alert('Vídeo removido!');
+            };
+            deleteTransaction.onerror = () => {
+              alert('Erro ao remover vídeo');
+            };
+          }
+        };
+
+        videoDiv.appendChild(video);
+        videoDiv.appendChild(titulo);
+        videoDiv.appendChild(btnRemover);
+
+        videoList.appendChild(videoDiv);
+
+        cursor.continue();
+      }
+    };
+  }
+</script>
+</body>
+</html>
